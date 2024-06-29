@@ -16,13 +16,14 @@ Spring Framework 6(Spring Boot 3) を使用して作成されています。
   - [Eclipse Temurin](https://adoptium.net/temurin/releases/)
 - [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code)
 - [Git for Windows](https://gitforwindows.org/)
+- [Docker Desktop][https://www.docker.com/ja-jp/products/docker-desktop/]
 
 ### Linux(Ubuntu)
 
 以下のコマンドを実行して、必要なソフトウエアをインストールしてください。
 
 ```sh
-sudo apt install git openjdk-17-jdk-headless
+sudo apt install git openjdk-21-jdk-headless
 wget -o vscode.deb https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
 sudo apt install ./vscode.deb
 ```
