@@ -11,7 +11,7 @@ Spring Framework 6(Spring Boot 3) を使用して作成されています。
 
 以下のソフトウエアを、公式サイトからダウンロードしてインストールしてください。
 
-- Java Development Kit 17 以降 (以下うちどれか一つを選択してインストール)
+- Java Development Kit 21 (以下うちどれか一つを選択してインストール)
   - [Amazon Corrette](https://aws.amazon.com/jp/corretto)
   - [Eclipse Temurin](https://adoptium.net/temurin/releases/)
 - [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code)
