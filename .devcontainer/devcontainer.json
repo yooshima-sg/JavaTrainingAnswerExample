@@ -15,7 +15,8 @@
 				"vscjava.vscode-gradle",
 				"vscjava.vscode-spring-boot-dashboard",
 				"vscjava.vscode-spring-initializr",
-				"vmware.vscode-spring-boot"
+				"vmware.vscode-spring-boot",
+				"mhutchie.git-graph"
 			]
 		}
 	}
