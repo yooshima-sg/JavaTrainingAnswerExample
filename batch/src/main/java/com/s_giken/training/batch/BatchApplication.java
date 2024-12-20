@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @SpringBootApplication
 public class BatchApplication implements CommandLineRunner {
 	private final Logger logger = LoggerFactory.getLogger(BatchApplication.class);
-	private final JdbcTemplate jdbcTemplate;
+	// private final JdbcTemplate jdbcTemplate;
 
 	/**
 	 * SpringBoot エントリポイント
@@ -27,7 +27,7 @@ public class BatchApplication implements CommandLineRunner {
 	 * @param jdbcTemplate SpringBootから注入される JdbcTemplate オブジェクト
 	 */
 	public BatchApplication(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+		// this.jdbcTemplate = jdbcTemplate;
 	}
 
 	/**
