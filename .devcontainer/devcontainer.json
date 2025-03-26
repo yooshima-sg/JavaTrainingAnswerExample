@@ -12,7 +12,7 @@
 		"vscode": {
 			"extensions": [
 				"vscjava.vscode-java-pack",
-				"vscjava.vscode-gradle",
+				"vscjava.vscode-maven",
 				"vscjava.vscode-spring-boot-dashboard",
 				"vscjava.vscode-spring-initializr",
 				"vmware.vscode-spring-boot",

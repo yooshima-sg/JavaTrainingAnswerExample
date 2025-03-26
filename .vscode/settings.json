@@ -15,5 +15,8 @@
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.dependency.packagePresentation": "hierarchical",
-  "gradle.nestedProjects": true
+  "gradle.nestedProjects": true,
+  "gradle.autoDetect": "off",
+  "java.import.gradle.enabled": false,
+  "java.import.gradle.wrapper.enabled": false
 }
