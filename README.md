@@ -45,8 +45,10 @@ VSCode を起動し、フォークしたリポジトリを適当な場所にク�
 ターミナルから以下のコマンドを実行します。
 
 ```sh
-./gradlew bootWar
+./mvnv package
 ```
 
-エラーない場合は、`build/lib` フォルダに、`webapp-0.0.1-SNAPSHOT.war` が作成されます。
-このファイルは、`java -jar webapp-0.0.1-SNAPSHOT.war` とすることで実行できます。
+エラーない場合は、`webapp/targe` フォルダには`webapp-0.0.1-SNAPSHOT.war` が、
+`batch/target` フォルダには、`batch-0.0.1-SNAPSHOT.jar` が作成されます。
+
+それぞれ、`java -jar <生成されたファイル>` とすることで実行できます。
