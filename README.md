@@ -1,9 +1,19 @@
 # 研修: Java 実習用サービス加入者管理システム
 
 このプロジェクトは、Java 実習用で使用するサービス加入者システムです。
-Spring Framework 6(Spring Boot 3) を使用して作成されています。
 
-**弊社 Java 研修受講者は、本リポジトリをフォークしてください。**
+本アプリケーションは Spring Framework 6(Spring Boot 3) を使用して作成されており、以下のパッケージを利用しています。
+
+- Spring Web
+  - Thymeleaf
+- Spring Validation
+- Spring Security
+- Spring Data JPA
+  - H2 Database 
+  - PosgreSQL Driver
+- Lombok
+
+**本リポジトリを自分Githubアカウントにフォークして利用してください**
 
 ## 必要なソフトウエア
 
@@ -45,10 +55,10 @@ VSCode を起動し、フォークしたリポジトリを適当な場所にク�
 ターミナルから以下のコマンドを実行します。
 
 ```sh
-./mvnv package
+./mvnw package
 ```
 
-エラーない場合は、`webapp/targe` フォルダには`webapp-0.0.1-SNAPSHOT.war` が、
+エラーがない場合は、`webapp/targe` フォルダには`webapp-0.0.1-SNAPSHOT.war` が、
 `batch/target` フォルダには、`batch-0.0.1-SNAPSHOT.jar` が作成されます。
 
 それぞれ、`java -jar <生成されたファイル>` とすることで実行できます。
