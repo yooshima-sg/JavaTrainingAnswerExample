@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.s_giken.training.webapp.exception.NotFoundException;
+import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.model.entity.Member;
-import com.s_giken.training.webapp.model.entity.MemberSearchCondition;
 import com.s_giken.training.webapp.service.MemberService;
 
 import org.springframework.stereotype.Controller;
@@ -78,6 +78,7 @@ public class MemberController {
 		if (!member.isPresent()) {
 			throw new NotFoundException(String.format("指定したmemberId(%d)の加入者情報が存在しません。", id));
 		}
+		model.addAttribute("memberId", id);
 		model.addAttribute("member", member);
 		return "member_edit";
 	}

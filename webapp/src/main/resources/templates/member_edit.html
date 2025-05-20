@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{layout/app :: layout(${memberId != null}?'加入者編集':'加入者新規追加', ~{::content}, 'member')}">
+<html th:replace="~{layout/app :: layout('加入者編集', ~{::content}, 'member')}">
 <div th:fragment="content">
     <!--/*
         加入者情報編集画面
@@ -8,6 +8,7 @@
         <span th:text="${message}"></span>
     </div>
     <form th:action="@{/member/save}" th:object="${member}" method="POST">
+
         <input type="hidden" th:field="*{memberId}">
         <div class="mb-3 row">
             <label class="col-sm-2 col-form-label" for="mail">メールアドレス</label>
@@ -19,14 +20,14 @@
         <div class="mb-3 row">
             <label class="col-sm-2 col-form-label" for="name">氏名</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{name}" maxlength="16">
+                <input type="text" class="form-control" th:field="*{name}" maxlength="32">
                 <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
             </div>
         </div>
         <div class="mb-3 row">
             <label class="col-sm-2 col-form-label" for="address">住所</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{address}">
+                <input type="text" class="form-control" th:field="*{address}" maxlength="128">
                 <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
             </div>
         </div>
@@ -55,13 +56,32 @@
                     th:errors="*{paymentMethod}"></span>
             </div>
         </div>
+        <!--/*-->
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label"></label>
+            <label class="col-sm-2 col-form-label">適用料金</label>
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">保存</button>
-                <a class="btn btn-link" th:href="@{/member/search}">キャンセル</a>
+                <input type="checkbox" name="ryokin" value="00001" checked>基本料金</label>
+                <div>
+                    <input type="checkbox" name="ryokin" value="00002"> オプション料金A
+                    <input type="date" name="ryokin_00002_start" id="ryokin_00002_start"> ～
+                    <input type="date" name="ryokin_00002_end" id="ryokin_00002_end">
+                </div>
             </div>
         </div>
+        <!--*/-->
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm">
+                <button type="submit" class="btn btn-primary">決定</button>
+                <a class="btn btn-link" th:href="@{/member/search}">キャンセル</a>
+            </div>
+            <div class="col-sm-auto">
+                <div th:if="${memberId} != null">
+                    <a class=" btn btn-danger" id="delete" th:href="@{/member/delete/{id}(id=${memberId})}"
+                        style="background-color: red;">削除
+                    </a>
+                </div>
+            </div>
     </form>
     <script th:inline="javascript">
         /**
@@ -84,4 +104,5 @@
         });
     </script>
 </div>
+
 </html>

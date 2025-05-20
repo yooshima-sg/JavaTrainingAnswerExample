@@ -1,8 +1,9 @@
 package com.s_giken.training.webapp.repository;
 
 import java.util.List;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import com.s_giken.training.webapp.model.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
@@ -21,7 +22,10 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
      * 詳細は以下の参考先URLを確認して下さい。
      * https://docs.spring.io/spring-data/jpa/docs/1.11.1.RELEASE/reference/html/# jpa.query-methods
      */
+    public List<Member> findByNameLikeAndMailLike(String name, String mail);
 
-    // TODO: 名前でも検索できるようにメソッドを定義しなおす
-    public List<Member> findByMailLike(String mail);
+    public List<Member> findByNameLikeAndMailLike(String name, String mail, Sort sort);
+
+    @Transactional
+    List<Member> deleteByMemberId(Integer memberId);
 }
