@@ -54,7 +54,7 @@ public class BatchApplication implements CommandLineRunner {
 	}
 
 	@Transactional
-	private void appendBillingData(LocalDate targetYm) {
+	private void appendBillingData(LocalDate targetYm) throws Exception {
 		int processedCount = 0;
 		String sql = "";
 		String targetYmStr = targetYm.format(DateTimeFormatter.ofPattern("yyyy年MM月"));
@@ -64,6 +64,10 @@ public class BatchApplication implements CommandLineRunner {
 		Integer count = jdbcTemplate.queryForObject(
 				"SELECT COUNT(*) FROM T_BILLING_STATUS WHERE billing_ym = ? and is_commit = true",
 				Integer.class, targetYm);
+
+		if (count == null) {
+			throw new Exception("count変数がnullになっています。");
+		}
 		if (count != 0) {
 			logger.info(String.format("%s分の請求情報はすでに確定しています。", targetYmStr));
 			return;
