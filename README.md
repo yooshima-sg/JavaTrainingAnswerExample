@@ -48,7 +48,25 @@ VSCode を起動し、フォークしたリポジトリを適当な場所にク�
 
 ## 実行およびデバッグ方法
 
+
+### VSCode
+
 クローンしたフォルダを VSCode で開いた状態で、F5 キーを押します。
+
+
+### コマンドライン
+
+以下のコマンドを実行します。
+
+(Windows)
+```
+mvnw spring-boot:run -pl webapp
+```
+
+(Linux)
+```
+./mvnw spring-boot:run -pl webapp
+```
 
 ## ビルド方法
 
