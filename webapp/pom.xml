@@ -7,9 +7,8 @@
 		<artifactId>training</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.s_giken.training</groupId>
+	<groupId>com.s_giken.training.webapp</groupId>
 	<artifactId>webapp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>webapp</name>
 	<description>実習用Webプログラム</description>

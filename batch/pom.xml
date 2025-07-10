@@ -9,9 +9,8 @@
 		<artifactId>training</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.s_giken.training</groupId>
+	<groupId>com.s_giken.training.batch</groupId>
 	<artifactId>batch</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>batch</name>
 	<description>研修用バッチプログラム</description>
