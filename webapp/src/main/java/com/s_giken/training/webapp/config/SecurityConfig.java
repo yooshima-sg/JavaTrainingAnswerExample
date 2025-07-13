@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -28,7 +29,7 @@ public class SecurityConfig {
      * @throws Exception 例外全般
      */
     @Bean
-    public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF対策を無効化
                 .headers((header) -> header.frameOptions((frame) -> frame.disable()))
@@ -41,7 +42,8 @@ public class SecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/"))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))
+                        .requestMatchers(
+                                PathPatternRequestMatcher.withDefaults().matcher("/h2-console/**"))
                         .permitAll()
                         .anyRequest().authenticated());
 
@@ -58,7 +60,7 @@ public class SecurityConfig {
      * @return ログインユーザー情報
      */
     @Bean
-    public UserDetailsService users() {
+    UserDetailsService users() {
         var user = User
                 .builder()
                 .username("user")
@@ -74,7 +76,7 @@ public class SecurityConfig {
      * @return パスワードをハッシュ化するエンコーダーのオブジェクト
      */
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
