@@ -17,9 +17,11 @@
 
 ## 必要なソフトウエア
 
-以下のソフトウエアを、公式サイトからダウンロードしてインストールしてください。
+本プロジェクトの開発をするには以下のソフトウエアが必要です。
+公式サイトからダウンロードしてインストールしてください。
 
-- Java Development Kit 17 以降
+- Java Development Kit (JDK) 17 以降
+  - [Oracle Java SE](https://www.oracle.com/jp/java/technologies/java-se-glance.html)
   - [Amazon Corrette](https://aws.amazon.com/jp/corretto)
   - [Eclipse Temurin](https://adoptium.net/temurin/releases/)
 - IDEもしくはテキストエディタ
@@ -27,17 +29,13 @@
     - [Pleiades](https://willbrains.jp/) - Pleiades All in One - Eclipse日本語化プラグイン＋α
   - [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code)
 - [Git for Windows](https://gitforwindows.org/)
-- [Docker Desktop][https://www.docker.com/ja-jp/products/docker-desktop/]
 
-### Linux(Ubuntu)
+## あると良いソフトウエア
 
-以下のコマンドを実行して、必要なソフトウエアをインストールしてください。
+- コンテナ化プラットフォーム ※コンテナ(DevContainer)環境で開発する場合に必要になります。
+  - [Docker Desktop][https://www.docker.com/ja-jp/products/docker-desktop/]
+  - [Docker Engine](https://docs.docker.com/engine/install/)
 
-```sh
-sudo apt install git openjdk-21-jdk-headless
-wget -o vscode.deb https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-sudo apt install ./vscode.deb
-```
 
 ## 開発方法
 
