@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 /**
  * Spring Securityの設定クラス
@@ -28,10 +28,11 @@ public class SecurityConfig {
      * @throws Exception 例外全般
      */
     @Bean
-    public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF対策を無効化
-                .headers((header) -> header.frameOptions((frame) -> frame.disable()))
+                .headers((header) -> header
+                        .frameOptions((frame) -> frame.disable()))
                 .formLogin((form) -> form
                         .defaultSuccessUrl("/")
                         .loginProcessingUrl("/login")
@@ -41,8 +42,19 @@ public class SecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/"))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))
+                        // 特例として認証を無視するURL
+                        .requestMatchers(
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/h2-console/**"),
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/image/**"),
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/css/**"))
                         .permitAll()
+                        // 特例以外のURLは要認証
                         .anyRequest().authenticated());
 
         return http.build();
@@ -58,7 +70,7 @@ public class SecurityConfig {
      * @return ログインユーザー情報
      */
     @Bean
-    public UserDetailsService users() {
+    UserDetailsService users() {
         var user = User
                 .builder()
                 .username("user")
@@ -74,7 +86,7 @@ public class SecurityConfig {
      * @return パスワードをハッシュ化するエンコーダーのオブジェクト
      */
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
