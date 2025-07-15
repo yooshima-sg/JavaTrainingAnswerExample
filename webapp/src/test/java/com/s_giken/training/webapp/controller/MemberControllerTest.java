@@ -27,7 +27,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.s_giken.training.webapp.model.entity.Member;
-import com.s_giken.training.webapp.model.entity.MemberSearchCondition;
+import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.service.MemberService;
 
 @WebMvcTest(MemberController.class)
@@ -40,7 +40,7 @@ class MemberControllerTest {
 
     @MockitoBean
     private MemberService memberService;
-    
+
     @MockitoBean
     private JpaMetamodelMappingContext jpaMetamodelMappingContext;
 
