@@ -8,11 +8,7 @@
 
         <!--/* ナビバー - システムロゴ */-->
         <a class="navbar-brand" th:href="@{/}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-people-fill"
-            viewBox="0 0 16 16">
-            <path
-              d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-          </svg>
+          <img src="/image/logo.svg" />
           <span class="fs-4">サービス管理システム</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFunctions"
@@ -30,8 +26,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:classappend="|${usefunction == 'member' ? 'active' : ''}|"
-                th:href="@{/member/search}">
+              <a class="nav-link" th:classappend="|${usefunction == 'member' ? 'active' : ''}|" th:href="@{/member/search}">
                 加入者情報管理
               </a>
             </li>
@@ -40,6 +35,9 @@
         <!--/* ナビバー - 右端*/-->
         <ul class="navbar-nav">
           <li class="nav-item">
+              <a class="nav-link" th:classappend="active" th:href="@{/logout}">
+                ログアウト
+              </a>
             <!--/* ログアウトリンク */-->
           </li>
         </ul>
@@ -50,8 +48,7 @@
   <div class="container">
     <div class="row">
       <header class="col-md-12 pt-md-4">
-        <!--/*  機能名表示 */-->
-        <h1 class="display-6" th:text="${title}"></h1>
+        <h1 class="display-6" th:text="${title}"><!--/*  機能名表示 */--></h1>
       </header>
       <main class="col-md-12 col-lg-12 pt-4">
         <div th:replace="${content}">

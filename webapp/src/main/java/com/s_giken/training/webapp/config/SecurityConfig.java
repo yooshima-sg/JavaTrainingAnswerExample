@@ -31,7 +31,8 @@ public class SecurityConfig {
     SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF対策を無効化
-                .headers((header) -> header.frameOptions((frame) -> frame.disable()))
+                .headers((header) -> header
+                        .frameOptions((frame) -> frame.disable()))
                 .formLogin((form) -> form
                         .defaultSuccessUrl("/")
                         .loginProcessingUrl("/login")
@@ -41,9 +42,19 @@ public class SecurityConfig {
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/"))
                 .authorizeHttpRequests((authorize) -> authorize
+                        // 特例として認証を無視するURL
                         .requestMatchers(
-                                PathPatternRequestMatcher.withDefaults().matcher("/h2-console/**"))
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/h2-console/**"),
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/image/**"),
+                                PathPatternRequestMatcher
+                                        .withDefaults()
+                                        .matcher("/css/**"))
                         .permitAll()
+                        // 特例以外のURLは要認証
                         .anyRequest().authenticated());
 
         return http.build();
