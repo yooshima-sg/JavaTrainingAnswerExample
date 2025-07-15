@@ -35,10 +35,7 @@
         <!--/* ナビバー - 右端*/-->
         <ul class="navbar-nav">
           <li class="nav-item">
-              <a class="nav-link" th:classappend="active" th:href="@{/logout}">
-                ログアウト
-              </a>
-            <!--/* ログアウトリンク */-->
+			<!--/* ログアウトリンク */-->
           </li>
         </ul>
       </div>
@@ -54,7 +51,7 @@
         <div th:replace="${content}">
           <!--/* 
             アプリケーション領域
-            このレイアウトの呼出元画面がここに埋め込まれます。
+            このレイアウトの呼出元画面がここに上書きされます。
           */-->
         </div>
       </main>
