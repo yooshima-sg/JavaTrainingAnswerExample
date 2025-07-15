@@ -12,16 +12,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import com.s_giken.training.webapp.model.entity.Member;
-import com.s_giken.training.webapp.model.entity.MemberSearchCondition;
+import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -95,26 +95,36 @@ class MemberServiceImplTest {
     void testFindByConditions() {
         MemberSearchCondition condition = new MemberSearchCondition();
         condition.setMail("test");
+        condition.setName("");
+        condition.setSortColName("name");
+        condition.setSortOrder("DESC");
 
-        when(memberRepository.findByMailLike("%test%")).thenReturn(testMembers);
+        Sort s = Sort.by(Direction.DESC, "name");
+
+        when(memberRepository.findByNameLikeAndMailLike("%%", "%test%", s)).thenReturn(testMembers);
 
         List<Member> result = memberService.findByConditions(condition);
 
         assertEquals(2, result.size());
-        verify(memberRepository, times(1)).findByMailLike("%test%");
+        verify(memberRepository, times(1)).findByNameLikeAndMailLike("%%", "%test%", s);
     }
 
     @Test
     void testFindByConditions_空の検索条件() {
         MemberSearchCondition condition = new MemberSearchCondition();
         condition.setMail("");
+        condition.setName("");
+        condition.setSortColName("name");
+        condition.setSortOrder("DESC");
 
-        when(memberRepository.findByMailLike("%%")).thenReturn(testMembers);
+        Sort s = Sort.by(Direction.DESC, "name");
+
+        when(memberRepository.findByNameLikeAndMailLike("%%", "%%", s)).thenReturn(testMembers);
 
         List<Member> result = memberService.findByConditions(condition);
 
         assertEquals(2, result.size());
-        verify(memberRepository, times(1)).findByMailLike("%%");
+        verify(memberRepository, times(1)).findByNameLikeAndMailLike("%%", "%%", s);
     }
 
     @Test

@@ -52,7 +52,7 @@ class MemberRepositoryTest {
 
     @Test
     void testFindByMailLike_部分一致() {
-        List<Member> result = memberRepository.findByMailLike("%tanaka%");
+        List<Member> result = memberRepository.findByNameLikeAndMailLike("%%", "%tanaka%");
 
         assertEquals(1, result.size());
         assertEquals("tanaka@example.com", result.get(0).getMail());
@@ -61,21 +61,21 @@ class MemberRepositoryTest {
 
     @Test
     void testFindByMailLike_複数一致() {
-        List<Member> result = memberRepository.findByMailLike("%@example.com%");
+        List<Member> result = memberRepository.findByNameLikeAndMailLike("%%", "%@example.com%");
 
         assertEquals(2, result.size());
     }
 
     @Test
     void testFindByMailLike_一致なし() {
-        List<Member> result = memberRepository.findByMailLike("%notfound%");
+        List<Member> result = memberRepository.findByNameLikeAndMailLike("%%", "%notfound%");
 
         assertTrue(result.isEmpty());
     }
 
     @Test
     void testFindByMailLike_空文字() {
-        List<Member> result = memberRepository.findByMailLike("%%");
+        List<Member> result = memberRepository.findByNameLikeAndMailLike("%%", "%%");
 
         assertEquals(2, result.size());
     }
