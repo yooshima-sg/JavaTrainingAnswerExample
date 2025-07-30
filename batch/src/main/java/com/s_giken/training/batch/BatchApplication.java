@@ -35,6 +35,11 @@ public class BatchApplication implements CommandLineRunner {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	/**
+	 * メイン処理
+	 * 
+	 * @param args コマンドライン引数
+	 */
 	@Override
 	public void run(String... args) throws Exception {
 		LocalDate targetYm = null;
@@ -53,6 +58,12 @@ public class BatchApplication implements CommandLineRunner {
 		}
 	}
 
+	/**
+	 * 請求データと請求明細データを作成し、テーブルに格納する。
+	 * 
+	 * @param targetYm 対象年月
+	 * @throws Exception SQLに関する例外
+	 */
 	@Transactional
 	private void appendBillingData(LocalDate targetYm) throws Exception {
 		int processedCount = 0;
@@ -167,6 +178,13 @@ public class BatchApplication implements CommandLineRunner {
 
 	}
 
+	/**
+	 * コマンドライン引数パース
+	 * 
+	 * @param args コマンドライン引数
+	 * @return 対象年月
+	 * @throws Exception コマンドライン引数が指定されていない。
+	 */
 	private LocalDate parseArgs(String[] args) throws Exception {
 		if (args.length != 1) {
 			throw new Exception("コマンドライン引数が正しくありません。");
