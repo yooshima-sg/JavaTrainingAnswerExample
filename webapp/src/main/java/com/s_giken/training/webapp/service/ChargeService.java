@@ -8,12 +8,14 @@ import com.s_giken.training.webapp.model.entity.Charge;
 public interface ChargeService {
     public List<Charge> findAll();
 
-    public Optional<Charge> findById(int chargeId);
+    public Optional<Charge> findById(Long chargeId);
 
     public List<Charge> findByConditions(ChargeSearchCondition chargeSearchCondition);
 
-    public void save(Charge charge);
+    public void add(Charge charge);
 
-    public void deleteById(int chargeId);
+    public void update(Charge charge);
+
+    public void deleteById(Long chargeId);
 
 }

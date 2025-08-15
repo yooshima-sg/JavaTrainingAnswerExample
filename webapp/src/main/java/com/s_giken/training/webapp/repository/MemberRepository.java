@@ -1,31 +1,56 @@
 package com.s_giken.training.webapp.repository;
 
 import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
+
 import com.s_giken.training.webapp.model.entity.Member;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
-    /*
-     * SprintBootでは、JpaRepositioyを継承したインターフェースを元に実態クラスが自動生成されます。
+public interface MemberRepository {
+    /**
+     * 加入者情報をすべて取得する。
      * 
-     * 【予め用意されているメソッド】
-     * <S extends T> S save(S entity); // エンティティの保存
-     * T findOne(ID primaryKey); // 主キーを元にエンティティを取得
-     * Iterable<T> findAll(); // 全てのエンティティを取得
-     * Long count(); // エンティティの件数を取得
-     * void delete(T entity); // エンティティの削除
-     * boolean exists(ID primaryKey); // 主キーを元にエンティティが存在するか確認
-     * 
-     * 別途メソッドを定義する場合はルールに従ってメソッド名を定義する必要があります。
-     * 詳細は以下の参考先URLを確認して下さい。
-     * https://docs.spring.io/spring-data/jpa/docs/1.11.1.RELEASE/reference/html/# jpa.query-methods
+     * @return Memberオブジェクトのリスト
      */
-    public List<Member> findByNameLikeAndMailLike(String name, String mail);
+    public List<Member> findAll();
 
-    public List<Member> findByNameLikeAndMailLike(String name, String mail, Sort sort);
+    /**
+     * 指定した加入者IDの加入者情報を取得する。
+     * 
+     * @param id 加入者ID
+     * @return Optional型の Memberオブジェクト
+     */
+    public Optional<Member> findById(Long id);
 
-    @Transactional
-    List<Member> deleteByMemberId(Integer memberId);
+    /**
+     * メールアドレスと名前の部分一致で加入者情報を取得する
+     * 
+     * @param mail メールアドレスの一部
+     * @param name 名前の一部
+     * @return Memberオブジェクトのリスト
+     */
+    public List<Member> findByMailAndNameLike(String mail, String name);
+
+    /**
+     * 加入者情報をデータベースへ登録する。
+     * 
+     * @param member 追加するMemberオブジェクト。 memberIdプロパティの値は null としなくてはならない
+     * @return 処理した件数
+     */
+    public int add(Member member);
+
+    /**
+     * データベースの加入者情報を更新する。
+     * 
+     * @param member 更新するMemberオブジェクト。 memberIdプロパティには値が設定されている必要がある。
+     * @return 処理した件数
+     */
+    public int update(Member member);
+
+    /**
+     * データベースから指定した加入者IDの加入者情報を削除する。
+     * 
+     * @param id 加入者ID
+     * @return 処理した件数
+     */
+    public int deleteById(Long id);
 }

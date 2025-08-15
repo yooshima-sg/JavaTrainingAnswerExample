@@ -41,44 +41,58 @@ public class ChargeController {
         return "charge_search_result";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editCharge(
-            @PathVariable int id,
-            Model model) {
-        var charge = chargeService.findById(id);
-        if (!charge.isPresent()) {
-            throw new NotFoundException("");
-        }
-        model.addAttribute("chargeId", id);
-        model.addAttribute("charge", charge);
-        return "charge_edit";
-
-    }
-
     @GetMapping("/add")
     public String addCharge(Model model) {
         var charge = new Charge();
         model.addAttribute("charge", charge);
-        model.addAttribute("chargeId", null);
+        model.addAttribute("addMode", true);
         return "charge_edit";
     }
 
-    @PostMapping("/save")
-    public String saveCharge(
+    @PostMapping("/add")
+    public String addCharge(
             @Validated Charge charge,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "charge_edit";
         }
-        chargeService.save(charge);
+        chargeService.add(charge);
+        redirectAttributes.addFlashAttribute("message", "保存しました。");
+        return "redirect:/charge/edit/" + charge.getChargeId();
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String editCharge(
+            @PathVariable Long id,
+            Model model) {
+        var charge = chargeService.findById(id);
+        if (!charge.isPresent()) {
+            throw new NotFoundException("");
+        }
+        model.addAttribute("addMode", false);
+        model.addAttribute("charge", charge.get());
+        return "charge_edit";
+
+    }
+
+    @PostMapping("/update")
+    public String updateCharge(
+            @Validated Charge charge,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "charge_edit";
+        }
+        chargeService.update(charge);
         redirectAttributes.addFlashAttribute("message", "保存しました。");
         return "redirect:/charge/edit/" + charge.getChargeId();
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCharge(
-            @PathVariable int id,
+            @PathVariable Long id,
             RedirectAttributes redirectAttributes) {
         chargeService.deleteById(id);
         redirectAttributes.addFlashAttribute("message", "削除しました。");

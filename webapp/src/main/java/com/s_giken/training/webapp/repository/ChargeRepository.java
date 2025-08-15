@@ -1,12 +1,20 @@
 package com.s_giken.training.webapp.repository;
 
 import java.util.List;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 import com.s_giken.training.webapp.model.entity.Charge;
 
-public interface ChargeRepository extends JpaRepository<Charge, Integer> {
-    public List<Charge> findByNameLike(String name);
+public interface ChargeRepository {
 
-    public List<Charge> findByNameLike(String name, Sort sort);
+	public List<Charge> findAll();
+
+	public Optional<Charge> findById(Long Id);
+
+	public List<Charge> findByChargeNameLike(String chargeName);
+
+	public int add(Charge charge);
+
+	public int update(Charge cahrge);
+
+	public int deleteById(Long id);
 }
