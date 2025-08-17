@@ -20,6 +20,11 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		this.rowMapper = rowMapper;
 	}
 
+	/**
+	 * 料金情報をすべて取得する
+	 * 
+	 * @return 料金情報のリスト
+	 */
 	@Override
 	public List<Charge> findAll() {
 		String sql = "SELECT * FROM T_CHARGE ORDER BY id";
@@ -27,6 +32,13 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		return result;
 	}
 
+	/**
+	 * 料金IDに一致する料金情報を取得する
+	 * 
+	 * @param id 料金ID
+	 * 
+	 * @return 料金情報のOptional型
+	 */
 	@Override
 	public Optional<Charge> findById(Long id) {
 		String sql = "SELECT * FROM T_CHARGE WHERE charge_id =  ? ";
@@ -36,6 +48,13 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		return Optional.ofNullable(charge);
 	}
 
+	/**
+	 * 料金名の一部から料金情報を取得する
+	 * 
+	 * @param chargeName 料金名の一部
+	 * 
+	 * @return 料金情報のリスト
+	 */
 	@Override
 	public List<Charge> findByChargeNameLike(String chargeName) {
 
@@ -48,6 +67,13 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		return result;
 	}
 
+	/**
+	 * 料金情報を追加する
+	 * 
+	 * @param charge 料金情報エンティティオブジェクト
+	 * 
+	 * @returnt 追加した料金情報の数
+	 */
 	@Override
 	public int add(Charge charge) {
 		Long chargeId = charge.getChargeId();
@@ -87,6 +113,13 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		return processed_count;
 	}
 
+	/**
+	 * 料金情報を更新する
+	 * 
+	 * @param charge 更新する情報が格納された料金情報エンティティオブジェクト
+	 * 
+	 * @return 更新した料金情報の数
+	 */
 	@Override
 	public int update(Charge charge) {
 		String sql = """
@@ -110,6 +143,13 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		return processed_count;
 	}
 
+	/**
+	 * 料金IDを持つ料金情報を削除する
+	 * 
+	 * @param id 料金情報ID
+	 * 
+	 * @return 削除した料金情報の数
+	 */
 	@Override
 	public int deleteById(Long id) {
 		String sql = "DELETE FROM T_CHARGE WHERE charge_id = ?";

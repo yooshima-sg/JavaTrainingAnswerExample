@@ -5,6 +5,10 @@ import java.util.Optional;
 import com.s_giken.training.webapp.model.ChargeSearchCondition;
 import com.s_giken.training.webapp.model.entity.Charge;
 
+
+/**
+ * 加入者情報ビジネスロジック(サービス)クラス
+ */
 public interface ChargeService {
     public List<Charge> findAll();
 

@@ -15,6 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 加入者情報エンティティ
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

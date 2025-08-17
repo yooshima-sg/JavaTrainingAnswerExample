@@ -12,7 +12,7 @@ import com.s_giken.training.webapp.model.MemberSearchCondition;
  */
 
 /**
- * 加入者管理機能のサービスインターフェース
+ * 加入者情報ビジネスロジック(サービス)インターフェース
  */
 public interface MemberService {
     public List<Member> findAll();

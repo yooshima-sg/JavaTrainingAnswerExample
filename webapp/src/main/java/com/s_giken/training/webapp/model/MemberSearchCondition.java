@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 加入者情報の検索条件を格納するクラス
+ */
 @Data // メンバー変数に対するゲッター・セッターを自動生成
 @NoArgsConstructor // 引数のないコンストラクタを自動生成
 @AllArgsConstructor // 全てのメンバ変数に対する引数を持つコンストラクタを自動生成

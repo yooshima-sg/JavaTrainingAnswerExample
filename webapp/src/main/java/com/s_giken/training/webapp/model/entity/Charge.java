@@ -14,6 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 料金情報エンティティ
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
