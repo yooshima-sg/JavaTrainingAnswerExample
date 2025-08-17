@@ -24,7 +24,7 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
-    public Optional<Charge> findById(int chargeId) {
+    public Optional<Charge> findById(Long chargeId) {
         return chargeRepository.findById(chargeId);
     }
 
@@ -50,7 +50,7 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
-    public void deleteById(int chargeId) {
+    public void deleteById(Long chargeId) {
         chargeRepository.deleteById(chargeId);
     }
 }

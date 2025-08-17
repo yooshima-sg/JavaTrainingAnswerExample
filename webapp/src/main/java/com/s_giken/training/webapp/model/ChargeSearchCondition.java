@@ -1,7 +1,5 @@
 package com.s_giken.training.webapp.model;
 
-import java.security.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChargeSearchCondition {
+    // 料金名の一部
     private String name;
-    private int amount;
-    private Timestamp start_date;
-    private Timestamp end_date;
 
+    // ソート対象項目名
     private String sortColName = "";// 初期化
+    // ソート方法
     private String sortOrder = "";
 }

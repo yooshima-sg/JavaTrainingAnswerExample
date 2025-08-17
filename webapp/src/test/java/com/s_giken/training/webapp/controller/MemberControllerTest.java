@@ -50,7 +50,7 @@ class MemberControllerTest {
     @BeforeEach
     void setUp() {
         testMember = new Member();
-        testMember.setMemberId(1);
+        testMember.setMemberId(1L);
         testMember.setMail("test@example.com");
         testMember.setName("テストユーザー");
         testMember.setAddress("東京都");
@@ -58,7 +58,7 @@ class MemberControllerTest {
         testMember.setPaymentMethod(1);
 
         Member testMember2 = new Member();
-        testMember2.setMemberId(2);
+        testMember2.setMemberId(2L);
         testMember2.setMail("test2@example.com");
         testMember2.setName("テストユーザー2");
         testMember2.setAddress("大阪府");
@@ -92,7 +92,7 @@ class MemberControllerTest {
 
     @Test
     void testEditMember_存在する場合() throws Exception {
-        when(memberService.findById(1)).thenReturn(Optional.of(testMember));
+        when(memberService.findById(1L)).thenReturn(Optional.of(testMember));
 
         mockMvc.perform(get("/member/edit/1"))
                 .andExpect(status().isOk())
@@ -102,7 +102,7 @@ class MemberControllerTest {
 
     @Test
     void testEditMember_存在しない場合() throws Exception {
-        when(memberService.findById(999)).thenReturn(Optional.empty());
+        when(memberService.findById(999L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/member/edit/999"))
                 .andExpect(status().isNotFound());
@@ -148,8 +148,8 @@ class MemberControllerTest {
 
     @Test
     void testDeleteMember_存在する場合() throws Exception {
-        when(memberService.findById(1)).thenReturn(Optional.of(testMember));
-        doNothing().when(memberService).deleteById(1);
+        when(memberService.findById(1L)).thenReturn(Optional.of(testMember));
+        doNothing().when(memberService).deleteById(1L);
 
         mockMvc.perform(get("/member/delete/1"))
                 .andExpect(status().is3xxRedirection())
@@ -158,7 +158,7 @@ class MemberControllerTest {
 
     @Test
     void testDeleteMember_存在しない場合() throws Exception {
-        when(memberService.findById(999)).thenReturn(Optional.empty());
+        when(memberService.findById(999L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/member/delete/999"))
                 .andExpect(status().isNotFound());

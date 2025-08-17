@@ -9,7 +9,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +41,9 @@ class ChargeServiceImplTests {
   @BeforeEach
   void setUp() {
     testCharge = new Charge();
-    testCharge.setChargeId(1);
+    testCharge.setChargeId(1L);
     testCharge.setName("テスト料金");
-    testCharge.setAmount(1000);
+    testCharge.setAmount(new BigDecimal("1000"));
     testCharge.setStartDate(new Date());
   }
 
@@ -60,23 +60,23 @@ class ChargeServiceImplTests {
 
   @Test
   void findById_正常系_存在するID() {
-    when(chargeRepository.findById(1)).thenReturn(Optional.of(testCharge));
+    when(chargeRepository.findById(1L)).thenReturn(Optional.of(testCharge));
 
-    Optional<Charge> result = chargeService.findById(1);
+    Optional<Charge> result = chargeService.findById(1L);
 
     assertTrue(result.isPresent());
     assertEquals(testCharge, result.get());
-    verify(chargeRepository, times(1)).findById(1);
+    verify(chargeRepository, times(1)).findById(1L);
   }
 
   @Test
   void findById_正常系_存在しないID() {
-    when(chargeRepository.findById(999)).thenReturn(Optional.empty());
+    when(chargeRepository.findById(999L)).thenReturn(Optional.empty());
 
-    Optional<Charge> result = chargeService.findById(999);
+    Optional<Charge> result = chargeService.findById(999L);
 
     assertFalse(result.isPresent());
-    verify(chargeRepository, times(1)).findById(999);
+    verify(chargeRepository, times(1)).findById(999L);
   }
 
   @Test
@@ -126,10 +126,10 @@ class ChargeServiceImplTests {
 
   @Test
   void deleteById_正常系() {
-    doNothing().when(chargeRepository).deleteById(1);
+    doNothing().when(chargeRepository).deleteById(1L);
 
-    chargeService.deleteById(1);
+    chargeService.deleteById(1L);
 
-    verify(chargeRepository, times(1)).deleteById(1);
+    verify(chargeRepository, times(1)).deleteById(1L);
   }
 }

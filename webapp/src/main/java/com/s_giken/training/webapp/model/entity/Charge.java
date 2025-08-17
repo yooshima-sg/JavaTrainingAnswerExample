@@ -1,5 +1,6 @@
 package com.s_giken.training.webapp.model.entity;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -28,16 +29,16 @@ public class Charge {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "charge_id")
-    private int chargeId;
+    private Long chargeId;
 
     @Column(name = "name")
     @NotNull
     @NotBlank
     private String name;
 
-    @Column(name = "amount")
+    @Column(name = "amount", precision = 9, scale = 0)
     @NotNull
-    private int amount;
+    private BigDecimal amount;
 
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

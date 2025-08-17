@@ -55,7 +55,7 @@ class MemberControllerTests {
   @Test
   void searchAndListing_正常系() throws Exception {
     Member member = new Member();
-    member.setMemberId(1);
+    member.setMemberId(1L);
     member.setName("テスト太郎");
     member.setMail("test@example.com");
     member.setAddress("東京都");
@@ -77,25 +77,25 @@ class MemberControllerTests {
   @Test
   void editMember_正常系() throws Exception {
     Member member = new Member();
-    member.setMemberId(1);
+    member.setMemberId(1L);
     member.setName("テスト太郎");
     member.setMail("test@example.com");
     member.setAddress("東京都");
     member.setStartDate(new Date());
     member.setPaymentMethod(1);
 
-    when(memberService.findById(1)).thenReturn(Optional.of(member));
+    when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
     mockMvc.perform(get("/member/edit/1"))
         .andExpect(status().isOk())
         .andExpect(view().name("member_edit"))
-        .andExpect(model().attribute("memberId", 1))
+        .andExpect(model().attribute("memberId", 1L))
         .andExpect(model().attributeExists("member"));
   }
 
   @Test
   void editMember_存在しないID() throws Exception {
-    when(memberService.findById(999)).thenReturn(Optional.empty());
+    when(memberService.findById(999L)).thenReturn(Optional.empty());
 
     mockMvc.perform(get("/member/edit/999"))
         .andExpect(status().isNotFound());
@@ -112,7 +112,7 @@ class MemberControllerTests {
   @Test
   void saveMember_正常系() throws Exception {
     Member member = new Member();
-    member.setMemberId(1);
+    member.setMemberId(1L);
 
     doNothing().when(memberService).save(any(Member.class));
 
@@ -131,10 +131,10 @@ class MemberControllerTests {
   @Test
   void deleteMember_正常系() throws Exception {
     Member member = new Member();
-    member.setMemberId(1);
+    member.setMemberId(1L);
 
-    when(memberService.findById(1)).thenReturn(Optional.of(member));
-    doNothing().when(memberService).deleteById(1);
+    when(memberService.findById(1L)).thenReturn(Optional.of(member));
+    doNothing().when(memberService).deleteById(1L);
 
     mockMvc.perform(get("/member/delete/1"))
         .andExpect(status().is3xxRedirection())
@@ -143,7 +143,7 @@ class MemberControllerTests {
 
   @Test
   void deleteMember_存在しないID() throws Exception {
-    when(memberService.findById(999)).thenReturn(Optional.empty());
+    when(memberService.findById(999L)).thenReturn(Optional.empty());
 
     mockMvc.perform(get("/member/delete/999"))
         .andExpect(status().isNotFound());

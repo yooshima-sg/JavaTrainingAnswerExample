@@ -41,7 +41,7 @@ class MemberServiceImplTests {
   @BeforeEach
   void setUp() {
     testMember = new Member();
-    testMember.setMemberId(1);
+    testMember.setMemberId(1L);
     testMember.setName("テスト太郎");
     testMember.setMail("test@example.com");
     testMember.setAddress("東京都");
@@ -62,23 +62,23 @@ class MemberServiceImplTests {
 
   @Test
   void findById_正常系_存在するID() {
-    when(memberRepository.findById(1)).thenReturn(Optional.of(testMember));
+    when(memberRepository.findById(1L)).thenReturn(Optional.of(testMember));
 
-    Optional<Member> result = memberService.findById(1);
+    Optional<Member> result = memberService.findById(1L);
 
     assertTrue(result.isPresent());
     assertEquals(testMember, result.get());
-    verify(memberRepository, times(1)).findById(1);
+    verify(memberRepository, times(1)).findById(1L);
   }
 
   @Test
   void findById_正常系_存在しないID() {
-    when(memberRepository.findById(999)).thenReturn(Optional.empty());
+    when(memberRepository.findById(999L)).thenReturn(Optional.empty());
 
-    Optional<Member> result = memberService.findById(999);
+    Optional<Member> result = memberService.findById(999L);
 
     assertFalse(result.isPresent());
-    verify(memberRepository, times(1)).findById(999);
+    verify(memberRepository, times(1)).findById(999L);
   }
 
   @Test
@@ -130,10 +130,10 @@ class MemberServiceImplTests {
 
   @Test
   void deleteById_正常系() {
-    doNothing().when(memberRepository).deleteById(1);
+    doNothing().when(memberRepository).deleteById(1L);
 
-    memberService.deleteById(1);
+    memberService.deleteById(1L);
 
-    verify(memberRepository, times(1)).deleteById(1);
+    verify(memberRepository, times(1)).deleteById(1L);
   }
 }

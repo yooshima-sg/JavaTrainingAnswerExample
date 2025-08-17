@@ -102,7 +102,7 @@ class MemberRepositoryTests {
   @Test
   void deleteById_正常系() {
     testMember = entityManager.persistAndFlush(testMember);
-    Integer memberId = testMember.getMemberId();
+    Long memberId = testMember.getMemberId();
 
     memberRepository.deleteById(memberId);
 

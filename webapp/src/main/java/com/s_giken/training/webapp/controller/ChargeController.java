@@ -43,7 +43,7 @@ public class ChargeController {
 
     @GetMapping("/edit/{id}")
     public String editCharge(
-            @PathVariable int id,
+            @PathVariable Long id,
             Model model) {
         var charge = chargeService.findById(id);
         if (!charge.isPresent()) {
@@ -78,7 +78,7 @@ public class ChargeController {
 
     @GetMapping("/delete/{id}")
     public String deleteCharge(
-            @PathVariable int id,
+            @PathVariable Long id,
             RedirectAttributes redirectAttributes) {
         chargeService.deleteById(id);
         redirectAttributes.addFlashAttribute("message", "削除しました。");

@@ -39,7 +39,7 @@ class MemberServiceImplTest {
     @BeforeEach
     void setUp() {
         testMember = new Member();
-        testMember.setMemberId(1);
+        testMember.setMemberId(1L);
         testMember.setMail("test@example.com");
         testMember.setName("テストユーザー");
         testMember.setAddress("東京都");
@@ -47,7 +47,7 @@ class MemberServiceImplTest {
         testMember.setPaymentMethod(1);
 
         Member testMember2 = new Member();
-        testMember2.setMemberId(2);
+        testMember2.setMemberId(2L);
         testMember2.setMail("test2@example.com");
         testMember2.setName("テストユーザー2");
         testMember2.setAddress("大阪府");
@@ -71,24 +71,24 @@ class MemberServiceImplTest {
 
     @Test
     void testFindById_存在する場合() {
-        when(memberRepository.findById(1)).thenReturn(Optional.of(testMember));
+        when(memberRepository.findById(1L)).thenReturn(Optional.of(testMember));
 
-        Optional<Member> result = memberService.findById(1);
+        Optional<Member> result = memberService.findById(1L);
 
         assertTrue(result.isPresent());
         assertEquals("test@example.com", result.get().getMail());
         assertEquals("テストユーザー", result.get().getName());
-        verify(memberRepository, times(1)).findById(1);
+        verify(memberRepository, times(1)).findById(1L);
     }
 
     @Test
     void testFindById_存在しない場合() {
-        when(memberRepository.findById(999)).thenReturn(Optional.empty());
+        when(memberRepository.findById(999L)).thenReturn(Optional.empty());
 
-        Optional<Member> result = memberService.findById(999);
+        Optional<Member> result = memberService.findById(999L);
 
         assertFalse(result.isPresent());
-        verify(memberRepository, times(1)).findById(999);
+        verify(memberRepository, times(1)).findById(999L);
     }
 
     @Test
@@ -138,8 +138,8 @@ class MemberServiceImplTest {
 
     @Test
     void testDeleteById() {
-        memberService.deleteById(1);
+        memberService.deleteById(1L);
 
-        verify(memberRepository, times(1)).deleteById(1);
+        verify(memberRepository, times(1)).deleteById(1L);
     }
 }

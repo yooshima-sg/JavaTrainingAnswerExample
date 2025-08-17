@@ -49,7 +49,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
-    private Integer memberId;
+    private Long memberId;
 
     @Column(name = "mail")
     @NotNull

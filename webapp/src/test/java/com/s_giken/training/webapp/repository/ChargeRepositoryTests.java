@@ -3,7 +3,7 @@ package com.s_giken.training.webapp.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +34,7 @@ class ChargeRepositoryTests {
   void setUp() {
     testCharge = new Charge();
     testCharge.setName("テスト料金");
-    testCharge.setAmount(1000);
+    testCharge.setAmount(new BigDecimal("1000"));
     testCharge.setStartDate(new Date());
   }
 
@@ -42,9 +42,9 @@ class ChargeRepositoryTests {
   void save_正常系() {
     Charge savedCharge = chargeRepository.save(testCharge);
 
-    assertTrue(savedCharge.getChargeId() != 0);
+    assertTrue(savedCharge.getChargeId() != 0L);
     assertEquals("テスト料金", savedCharge.getName());
-    assertEquals(1000, savedCharge.getAmount());
+    assertEquals(new BigDecimal("1000"), savedCharge.getAmount());
   }
 
   @Test
@@ -81,7 +81,7 @@ class ChargeRepositoryTests {
   void findByNameLike_正常系_ソート指定() {
     Charge charge2 = new Charge();
     charge2.setName("あいうえお料金");
-    charge2.setAmount(2000);
+    charge2.setAmount(new BigDecimal("2000"));
     charge2.setStartDate(new Date());
 
     entityManager.persistAndFlush(testCharge);
@@ -98,7 +98,7 @@ class ChargeRepositoryTests {
   @Test
   void deleteById_正常系() {
     testCharge = entityManager.persistAndFlush(testCharge);
-    int chargeId = testCharge.getChargeId();
+    Long chargeId = testCharge.getChargeId();
 
     chargeRepository.deleteById(chargeId);
 

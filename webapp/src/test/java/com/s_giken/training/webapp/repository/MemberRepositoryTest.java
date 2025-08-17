@@ -106,7 +106,7 @@ class MemberRepositoryTest {
 
     @Test
     void testDeleteById() {
-        int memberId = testMember1.getMemberId();
+        Long memberId = testMember1.getMemberId();
         memberRepository.deleteById(memberId);
 
         Optional<Member> result = memberRepository.findById(memberId);

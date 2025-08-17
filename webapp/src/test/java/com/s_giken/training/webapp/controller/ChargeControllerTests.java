@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -55,9 +55,9 @@ class ChargeControllerTests {
   @Test
   void searchAndListing_正常系() throws Exception {
     Charge charge = new Charge();
-    charge.setChargeId(1);
+    charge.setChargeId(1L);
     charge.setName("テスト料金");
-    charge.setAmount(1000);
+    charge.setAmount(new BigDecimal("1000"));
     charge.setStartDate(new Date());
 
     when(chargeService.findByConditions(any(ChargeSearchCondition.class)))
@@ -74,23 +74,23 @@ class ChargeControllerTests {
   @Test
   void editCharge_正常系() throws Exception {
     Charge charge = new Charge();
-    charge.setChargeId(1);
+    charge.setChargeId(1L);
     charge.setName("テスト料金");
-    charge.setAmount(1000);
+    charge.setAmount(new BigDecimal("1000"));
     charge.setStartDate(new Date());
 
-    when(chargeService.findById(1)).thenReturn(Optional.of(charge));
+    when(chargeService.findById(1L)).thenReturn(Optional.of(charge));
 
     mockMvc.perform(get("/charge/edit/1"))
         .andExpect(status().isOk())
         .andExpect(view().name("charge_edit"))
-        .andExpect(model().attribute("chargeId", 1))
+        .andExpect(model().attribute("chargeId", 1L))
         .andExpect(model().attributeExists("charge"));
   }
 
   @Test
   void editCharge_存在しないID() throws Exception {
-    when(chargeService.findById(999)).thenReturn(Optional.empty());
+    when(chargeService.findById(999L)).thenReturn(Optional.empty());
 
     mockMvc.perform(get("/charge/edit/999"))
         .andExpect(status().isNotFound());
@@ -107,7 +107,7 @@ class ChargeControllerTests {
   @Test
   void saveCharge_正常系() throws Exception {
     Charge charge = new Charge();
-    charge.setChargeId(1);
+    charge.setChargeId(1L);
 
     doNothing().when(chargeService).save(any(Charge.class));
 
@@ -123,7 +123,7 @@ class ChargeControllerTests {
 
   @Test
   void deleteCharge_正常系() throws Exception {
-    doNothing().when(chargeService).deleteById(1);
+    doNothing().when(chargeService).deleteById(1L);
 
     mockMvc.perform(get("/charge/delete/1"))
         .andExpect(status().is3xxRedirection())

@@ -8,9 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // 引数のないコンストラクタを自動生成
 @AllArgsConstructor // 全てのメンバ変数に対する引数を持つコンストラクタを自動生成
 public class MemberSearchCondition {
-    // メールアドレス検索用
+    // メールアドレスの一部
     private String mail;
+    // 加入者名の一部
     private String name;
+
+    // ソート対象項目名
     private String sortColName;
+    // ソート方法
     private String sortOrder;
 }

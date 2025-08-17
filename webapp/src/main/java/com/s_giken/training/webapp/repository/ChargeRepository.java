@@ -5,7 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.s_giken.training.webapp.model.entity.Charge;
 
-public interface ChargeRepository extends JpaRepository<Charge, Integer> {
+public interface ChargeRepository extends JpaRepository<Charge, Long> {
     public List<Charge> findByNameLike(String name);
 
     public List<Charge> findByNameLike(String name, Sort sort);

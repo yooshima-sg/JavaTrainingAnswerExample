@@ -72,7 +72,7 @@ public class MemberController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String editMember(
-			@PathVariable int id,
+			@PathVariable Long id,
 			Model model) {
 		var member = memberService.findById(id);
 		if (!member.isPresent()) {
@@ -126,7 +126,7 @@ public class MemberController {
 	 */
 	@GetMapping("/delete/{id}")
 	public String deleteMember(
-			@PathVariable int id,
+			@PathVariable Long id,
 			RedirectAttributes redirectAttributes) {
 		var member = memberService.findById(id);
 		if (!member.isPresent()) {

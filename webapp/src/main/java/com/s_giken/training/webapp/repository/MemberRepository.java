@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import com.s_giken.training.webapp.model.entity.Member;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
     /*
      * SprintBootでは、JpaRepositioyを継承したインターフェースを元に実態クラスが自動生成されます。
      * 
@@ -27,5 +27,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     public List<Member> findByNameLikeAndMailLike(String name, String mail, Sort sort);
 
     @Transactional
-    List<Member> deleteByMemberId(Integer memberId);
+    public List<Member> deleteByMemberId(Long memberId);
 }

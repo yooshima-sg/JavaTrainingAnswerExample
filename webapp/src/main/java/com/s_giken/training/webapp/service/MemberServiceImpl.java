@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
      * @return 加入者IDに一致した加入者情報
      */
     @Override
-    public Optional<Member> findById(int memberId) {
+    public Optional<Member> findById(Long memberId) {
         return memberRepository.findById(memberId);
     }
 
@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService {
      * @return 更新した加入者情報
      */
     @Override
-    public void deleteById(int memberId) {
+    public void deleteById(Long memberId) {
         memberRepository.deleteById(memberId);
     }
 }
