@@ -2,12 +2,13 @@
 
 ## 以下の課題に対する回答例です
 
+データの入出力には Spring JDBC を利用しています。 Spring Data JPA を利用した実装例は[こちら](https://github.com/yooshima-sg/JavaTrainingAnswerExample/tree/main)を参照してください。
+
 1. ログアウトリンクの作成
 2. 加入者情報検索で名前の一部で検索できるようにする
-3. 料金検索機能の実装
-4. 月額料金登録・編集機能の実装 ​
-5. 【追加 1】削除機能の実装
-6. 【追加 2】一覧ソート機能の実装
+3. 料金情報検索機能の実装
+4. 料金情報登録・編集機能の実装 ​
+5. 請求データ作成バッチ
 
 ---
 
@@ -19,9 +20,8 @@
   - Thymeleaf
 - Spring Validation
 - Spring Security
-- Spring Data JPA
+- Spring JDBC
   - H2 Database 
-  - PosgreSQL Driver
 - Lombok
 
 **本リポジトリを自分Githubアカウントにフォークして利用してください**
