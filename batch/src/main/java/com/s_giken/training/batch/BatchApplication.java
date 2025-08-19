@@ -166,7 +166,7 @@ public class BatchApplication implements CommandLineRunner {
 					C.name,
 					C.amount,
 					C.start_date,
-					C.end_date,
+					C.end_date
 				FROM
 					(SELECT * FROM T_MEMBER WHERE start_date < DATEADD(MONTH, 1, DATE '@@BILLING_YM@@') AND
 							  (end_date IS NULL OR end_date >= DATE '@@BILLING_YM@@')) M,
@@ -189,7 +189,7 @@ public class BatchApplication implements CommandLineRunner {
 		if (args.length != 1) {
 			throw new Exception("コマンドライン引数が正しくありません。");
 		}
-		var formatter = new DateTimeFormatterBuilder()
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				.appendPattern("yyyyMM")
 				.parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
 				.toFormatter();
