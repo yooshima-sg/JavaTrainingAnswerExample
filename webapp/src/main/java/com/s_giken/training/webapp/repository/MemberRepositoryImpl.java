@@ -3,7 +3,7 @@ package com.s_giken.training.webapp.repository;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -44,7 +44,14 @@ public class MemberRepositoryImpl implements MemberRepository {
         String sql = "SELECT * FROM T_MEMBER WHERE member_id =  ? ";
         Object[] args = {id};
         int[] argTypes = {Types.BIGINT};
-        Member member = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
+
+        Member member;
+        try {
+            member = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
+        } catch (DataAccessException e) {
+            member = null;
+        }
+
         return Optional.ofNullable(member);
     }
 

@@ -3,6 +3,7 @@ package com.s_giken.training.webapp.repository;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -44,7 +45,14 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 		String sql = "SELECT * FROM T_CHARGE WHERE charge_id =  ? ";
 		Object[] args = {id};
 		int[] argTypes = {Types.BIGINT};
-		Charge charge = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
+
+		Charge charge;
+		try {
+			charge = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
+		} catch (DataAccessException e) {
+			charge = null;
+		}
+
 		return Optional.ofNullable(charge);
 	}
 
