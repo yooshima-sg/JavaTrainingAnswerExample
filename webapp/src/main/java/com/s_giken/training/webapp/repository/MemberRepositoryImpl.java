@@ -10,12 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import com.s_giken.training.webapp.model.entity.Member;
 
+/**
+ * 加入者情報 リポジトリクラス
+ */
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {
-
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Member> rowMapper;
 
+    /**
+     * コンストラクタ
+     * 
+     * @param jdbcTemplate Springよりインジェクトされる JdbcTemplate オブジェクト
+     * @param rowMapper Springよりインジェクトされる RowMapper<Member< オブジェクト
+     */
     public MemberRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Member> rowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.rowMapper = rowMapper;
@@ -41,7 +49,7 @@ public class MemberRepositoryImpl implements MemberRepository {
      */
     @Override
     public Optional<Member> findById(Long id) {
-        String sql = "SELECT * FROM T_MEMBER WHERE member_id =  ? ";
+        String sql = "SELECT * FROM T_MEMBER WHERE member_id = ?";
         Object[] args = {id};
         int[] argTypes = {Types.BIGINT};
 

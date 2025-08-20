@@ -10,12 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import com.s_giken.training.webapp.model.entity.Charge;
 
+/**
+ * 料金情報 リポジトリオブジェクト
+ */
 @Repository
 public class ChargeRepositoryImpl implements ChargeRepository {
-
 	private final JdbcTemplate jdbcTemplate;
 	private final RowMapper<Charge> rowMapper;
 
+	/**
+	 * コンストラクタ
+	 * 
+	 * @param jdbcTemplate Springよりインジェクトされる JdbcTemplate オブジェクト
+	 * @param rowMapper Springよりインジェクトされる RowMapper<Member< オブジェクト
+	 */
 	public ChargeRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Charge> rowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
 		this.rowMapper = rowMapper;
