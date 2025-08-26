@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAdjusters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -98,6 +99,7 @@ public class AllSQLResolver implements IResolver {
         logger.info(String.format("%d件削除しました。", processedCount));
 
         // 請求データの作成と挿入
+        LocalDate endTargetYm = targetYm.with(TemporalAdjusters.lastDayOfMonth());
         logger.info(String.format("%s分の請求データを追加しています。", targetYmStr));
         sql = """
                 INSERT INTO T_BILLING_DATA (
@@ -126,7 +128,7 @@ public class AllSQLResolver implements IResolver {
                 	sum_amount * (1 + tax_ratio) as total
                 FROM (
                 	SELECT
-                		DATE '@@BILLING_YM@@' as billing_ym,
+                		CAST(? as DATE) as billing_ym,
                 		M.member_id,
                 		M.mail,
                 		M.name,
@@ -136,16 +138,22 @@ public class AllSQLResolver implements IResolver {
                 		M.payment_method,
                 		(SELECT SUM(amount)
                 			FROM T_CHARGE C
-                			WHERE C.start_date < DATEADD(MONTH, 1, DATE '@@BILLING_YM@@' ) AND
-                				(C.end_date IS NULL OR C.end_date >= DATE '@@BILLING_YM@@')) as sum_amount,
+                			WHERE C.start_date <= CAST(? AS DATE) AND
+                				(C.end_date IS NULL OR C.end_date >= CAST(? AS DATE))) as sum_amount,
                 		0.1 as tax_ratio
                 	FROM T_MEMBER M
                 	WHERE
-                		M.start_date < DATEADD(MONTH, 1, DATE '@@BILLING_YM@@') AND
-                		(M.end_date IS NULL OR M.end_date >= DATE '@@BILLING_YM@@')
-                )""";
-        sql = sql.replace("@@BILLING_YM@@", targetYm.format(DateTimeFormatter.ISO_DATE));
-        processedCount = jdbcTemplate.update(sql);
+                		M.start_date <= CAST(? AS DATE) AND
+                		(M.end_date IS NULL OR M.end_date >= CAST(? AS DATE))
+                )
+                """;
+        processedCount = jdbcTemplate.update(
+                sql,
+                targetYm,
+                endTargetYm,
+                targetYm,
+                endTargetYm,
+                targetYm);
         logger.info(String.format("%d件追加しました。", processedCount));
 
         // 請求明細データの作成と挿入
@@ -160,7 +168,7 @@ public class AllSQLResolver implements IResolver {
                 	start_date,
                 	end_date
                 ) SELECT
-                	DATE '@@BILLING_YM@@' as billng_ym,
+                	CAST(? AS DATE) as billng_ym,
                 	M.member_id,
                 	C.charge_id,
                 	C.name,
@@ -168,12 +176,21 @@ public class AllSQLResolver implements IResolver {
                 	C.start_date,
                 	C.end_date
                 FROM
-                	(SELECT * FROM T_MEMBER WHERE start_date < DATEADD(MONTH, 1, DATE '@@BILLING_YM@@') AND
-                			  (end_date IS NULL OR end_date >= DATE '@@BILLING_YM@@')) M,
-                	(SELECT * FROM T_CHARGE WHERE start_date < DATEADD(MONTH, 1, DATE '@@BILLING_YM@@') AND
-                			  (end_date IS NULL OR end_date >= DATE '@@BILLING_YM@@')) C""";
-        sql = sql.replace("@@BILLING_YM@@", targetYm.format(DateTimeFormatter.ISO_DATE));
-        processedCount = jdbcTemplate.update(sql);
+                    T_MEMBER M
+                    CROSS JOIN T_CHARGE C
+                WHERE
+                    M.start_date <= CAST(? AS DATE)
+                    AND (M.end_date IS NULL OR M.end_date >= CAST(? AS DATE))
+                    AND C.start_date <= CAST(? AS DATE)
+                    AND (C.end_date IS NULL OR C.end_date >= CAST(? AS DATE))
+                """;
+        processedCount = jdbcTemplate.update(
+                sql,
+                targetYm,
+                endTargetYm,
+                targetYm,
+                endTargetYm,
+                targetYm);
         logger.info(String.format("%d件追加しました。", processedCount));
 
     }
