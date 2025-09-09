@@ -68,11 +68,18 @@ public class MemberRepositoryImpl implements MemberRepository {
      * 
      * @param mail メールアドレスの一部
      * @param name 名前の一部
+     * @param sortCol ソートしたい列名
+     * @param sortOrder ソート方法(昇順or降順)
+     *
      * @return Memberオブジェクトのリスト
      */
     @Override
-    public List<Member> findByMailAndNameLike(String mail, String name) {
-        String sql = "SELECT * FROM T_MEMBER WHERE mail like ? AND name like ?";
+    public List<Member> findByMailAndNameLikeWithSort(String mail, String name, String sortCol,
+            String sortOrder) {
+        String sql =
+                "SELECT * FROM T_MEMBER WHERE mail like ? AND name like ? ORDER BY @@sortCol@@ @@sortOrder@@";
+        sql = sql.replace("@@sortCol@@", sortCol.toUpperCase())
+                .replace("@@sortOrder@@", sortOrder.toUpperCase());
         Object[] args = {"%" + mail + "%", "%" + name + "%"};
         int[] argTypes = {Types.VARCHAR, Types.VARCHAR};
         List<Member> result = jdbcTemplate.query(sql, args, argTypes, rowMapper);

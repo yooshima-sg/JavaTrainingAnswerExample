@@ -55,9 +55,13 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<Member> findByConditions(MemberSearchCondition memberSearchCondition) {
-        return memberRepository.findByMailAndNameLike(memberSearchCondition.getMail(),memberSearchCondition.getName());
+        return memberRepository.findByMailAndNameLikeWithSort(
+                memberSearchCondition.getMail(),
+                memberSearchCondition.getName(),
+                memberSearchCondition.getSortColName(),
+                memberSearchCondition.getSortOrder());
     }
-                
+
 
     /**
      * 加入者を登録する

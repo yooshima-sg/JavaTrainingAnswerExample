@@ -14,7 +14,6 @@ import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.model.PaymentMethod;
 import com.s_giken.training.webapp.model.entity.Member;
 import com.s_giken.training.webapp.service.MemberService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -75,8 +74,13 @@ public class MemberController {
 	 */
 	@PostMapping("/search")
 	public String searchAndListing(
-			@ModelAttribute("memberSearchCondition") MemberSearchCondition memberSearchCodition,
+			@ModelAttribute("memberSearchCondition") @Validated MemberSearchCondition memberSearchCodition,
+			BindingResult bindingResult,
 			Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "member_search_condition";
+		}
 		var result = memberService.findByConditions(memberSearchCodition);
 		model.addAttribute("result", result);
 		return "member_search_result";

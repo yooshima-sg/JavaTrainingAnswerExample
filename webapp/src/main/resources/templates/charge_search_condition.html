@@ -14,9 +14,31 @@
       </div>
     </div>
     <div class="mb-3 row">
+      <label class="col-sm-2 col-form-label" for="sortColName">表示順</label>
+      <div class="col-sm-auto row">
+        <div class="col-sm-auto">
+          <select class="form-control" th:field="*{sortColName}">
+            <option value="charge_id">料金ID</option>
+            <option value="name">料金名</option>
+            <option value="amount">月額料金</option>
+            <option value="start_date">運用開始日</option>
+            <option value="end_date">運用終了日</option>
+          </select>
+        </div>
+        <div class="col-sm-auto">
+          <select class="form-select" aria-label="Default select example" th:field="*{sortOrder}">
+            <option value="asc">昇順</option>
+            <option value="desc">降順</option>
+          </select>
+        </div>
+        <span class="text-danger" th:if="${#fields.hasErrors('sortColName')}" th:errors="*{sortColName}"></span>
+        <span class="text-danger" th:if="${#fields.hasErrors('sortOrder')}" th:errors="*{sortOrder}"></span>
+      </div>
+    </div>
+    <div class="mb-3 row">
       <label class="col-sm-2 col-form-label"></label>
       <div class="col-sm-10">
-        <input class="btn btn-primary" type="submit" value="検索" />
+        <button class="btn btn-primary" type="submit">検索</button>
         <a class="btn btn-secondary" th:href="@{/charge/add}">登録</a>
       </div>
     </div>

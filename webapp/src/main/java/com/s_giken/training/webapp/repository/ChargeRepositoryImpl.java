@@ -68,13 +68,21 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 	 * 料金名の一部から料金情報を取得する
 	 * 
 	 * @param chargeName 料金名の一部
+	 * @param sortCol ソートしたい列名
+	 * @param sortOrder ソート方法(昇順or降順)
 	 * 
 	 * @return 料金情報のリスト
 	 */
 	@Override
-	public List<Charge> findByChargeNameLike(String chargeName) {
+	public List<Charge> findByChargeNameLikeWithOrder(
+			String chargeName,
+			String sortColName,
+			String sortOrder) {
 
-		String sql = "SELECT * FROM T_CHARGE WHERE name like ?";
+		String sql =
+				"SELECT * FROM T_CHARGE WHERE name like ? ORDER BY @@sortColName@@ @@sortOrder@@";
+		sql = sql.replace("@@sortColName@@", sortColName.toUpperCase())
+				.replace("@@sortOrder@@", sortOrder.toUpperCase());
 		Object[] p = {"%" + chargeName + "%"};
 		int[] pTypes = {Types.VARCHAR};
 

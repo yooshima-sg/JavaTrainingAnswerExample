@@ -26,9 +26,15 @@ public interface MemberRepository {
      * 
      * @param mail メールアドレスの一部
      * @param name 名前の一部
+     * @param sortCol ソートしたい列名
+     * @param sortOrder ソート方法(昇順or降順)
      * @return Memberオブジェクトのリスト
      */
-    public List<Member> findByMailAndNameLike(String mail, String name);
+    public List<Member> findByMailAndNameLikeWithSort(
+            String mail,
+            String name,
+            String sortCol,
+            String sortOrder);
 
     /**
      * 加入者情報をデータベースへ登録する。

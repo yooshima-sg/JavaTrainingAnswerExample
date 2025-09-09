@@ -1,5 +1,6 @@
 package com.s_giken.training.webapp.model;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,10 @@ public class MemberSearchCondition {
     // メールアドレス検索用
     private String mail;
     private String name;
+
+    @Pattern(regexp = "^(member_id|mail|name|address|start_date|end_date|payment_method)$")
     private String sortColName;
+
+    @Pattern(regexp = "^(asc|desc)$")
     private String sortOrder;
 }
