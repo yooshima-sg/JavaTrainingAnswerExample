@@ -6,6 +6,7 @@ import java.util.Set;
 import com.s_giken.training.webapp.model.entity.Member;
 
 public interface MemberRepository {
+    // sortCOLName で許可する値
     public static final Set<String> ALLOW_COLUMN_NAMES =
             Set.of("member_id",
                     "mail",
@@ -14,6 +15,7 @@ public interface MemberRepository {
                     "start_date",
                     "end_date",
                     "payment_method");
+    // sortOrder で許可する値
     public static final Set<String> ALLOW_SORT_ORDER =
             Set.of("desc", "asc");
 

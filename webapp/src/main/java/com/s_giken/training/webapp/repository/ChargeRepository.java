@@ -7,12 +7,14 @@ import com.s_giken.training.webapp.model.entity.Charge;
 
 public interface ChargeRepository {
 
+	// sortCOLName で許可する値
 	public static final Set<String> ALLOW_COLUMN_NAMES =
 			Set.of("charge_id",
 					"name",
 					"amount",
 					"start_date",
 					"end_date");
+	// sortOrder で許可する値
 	public static final Set<String> ALLOW_SORT_ORDER =
 			Set.of("desc", "asc");
 
