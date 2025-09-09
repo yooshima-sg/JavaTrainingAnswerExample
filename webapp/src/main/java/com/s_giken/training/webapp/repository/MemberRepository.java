@@ -2,10 +2,21 @@ package com.s_giken.training.webapp.repository;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import com.s_giken.training.webapp.model.entity.Member;
 
 public interface MemberRepository {
+    public static final Set<String> ALLOW_COLUMN_NAMES =
+            Set.of("member_id",
+                    "mail",
+                    "name",
+                    "address",
+                    "start_date",
+                    "end_date",
+                    "payment_method");
+    public static final Set<String> ALLOW_SORT_ORDER =
+            Set.of("desc", "asc");
+
     /**
      * 加入者情報をすべて取得する。
      * 

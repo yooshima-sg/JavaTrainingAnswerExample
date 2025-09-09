@@ -79,6 +79,14 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 			String sortColName,
 			String sortOrder) {
 
+		if (!ALLOW_COLUMN_NAMES.contains(sortColName)) {
+			throw new IllegalArgumentException("sortColName is Invalid.");
+		}
+
+		if (!ALLOW_SORT_ORDER.contains(sortOrder)) {
+			throw new IllegalArgumentException("sortOrder is invalid");
+		}
+
 		String sql =
 				"SELECT * FROM T_CHARGE WHERE name like ? ORDER BY @@sortColName@@ @@sortOrder@@";
 		sql = sql.replace("@@sortColName@@", sortColName.toUpperCase())

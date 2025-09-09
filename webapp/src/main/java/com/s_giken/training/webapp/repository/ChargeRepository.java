@@ -2,9 +2,19 @@ package com.s_giken.training.webapp.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import com.s_giken.training.webapp.model.entity.Charge;
 
 public interface ChargeRepository {
+
+	public static final Set<String> ALLOW_COLUMN_NAMES =
+			Set.of("charge_id",
+					"name",
+					"amount",
+					"start_date",
+					"end_date");
+	public static final Set<String> ALLOW_SORT_ORDER =
+			Set.of("desc", "asc");
 
 	/**
 	 * 料金情報をすべて取得する

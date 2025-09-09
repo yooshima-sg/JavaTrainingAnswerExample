@@ -68,17 +68,28 @@ public class MemberRepositoryImpl implements MemberRepository {
      * 
      * @param mail メールアドレスの一部
      * @param name 名前の一部
-     * @param sortCol ソートしたい列名
+     * @param sortColName ソートしたい列名
      * @param sortOrder ソート方法(昇順or降順)
      *
      * @return Memberオブジェクトのリスト
      */
     @Override
-    public List<Member> findByMailAndNameLikeWithSort(String mail, String name, String sortCol,
+    public List<Member> findByMailAndNameLikeWithSort(
+            String mail,
+            String name,
+            String sortColName,
             String sortOrder) {
+
+        if (!ALLOW_COLUMN_NAMES.contains(sortColName)) {
+            throw new IllegalArgumentException("sortColName is Invalid.");
+        }
+
+        if (!ALLOW_SORT_ORDER.contains(sortOrder)) {
+            throw new IllegalArgumentException("sortOrder is invalid");
+        }
         String sql =
-                "SELECT * FROM T_MEMBER WHERE mail like ? AND name like ? ORDER BY @@sortCol@@ @@sortOrder@@";
-        sql = sql.replace("@@sortCol@@", sortCol.toUpperCase())
+                "SELECT * FROM T_MEMBER WHERE mail like ? AND name like ? ORDER BY @@sortColName@@ @@sortOrder@@";
+        sql = sql.replace("@@sortColName@@", sortColName.toUpperCase())
                 .replace("@@sortOrder@@", sortOrder.toUpperCase());
         Object[] args = {"%" + mail + "%", "%" + name + "%"};
         int[] argTypes = {Types.VARCHAR, Types.VARCHAR};
