@@ -3,7 +3,6 @@ package com.s_giken.training.webapp.repository;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
