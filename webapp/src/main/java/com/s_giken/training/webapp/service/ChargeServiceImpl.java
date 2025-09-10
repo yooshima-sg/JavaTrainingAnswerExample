@@ -8,17 +8,15 @@ import com.s_giken.training.webapp.exception.AttributeErrorException;
 import com.s_giken.training.webapp.model.ChargeSearchCondition;
 import com.s_giken.training.webapp.model.entity.Charge;
 import com.s_giken.training.webapp.repository.ChargeRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 料金情報ビジネスロジック(サービス)クラス
  */
 @Service
+@RequiredArgsConstructor
 public class ChargeServiceImpl implements ChargeService {
-    private ChargeRepository chargeRepository;
-
-    public ChargeServiceImpl(ChargeRepository chargeRepository) {
-        this.chargeRepository = chargeRepository;
-    }
+    private final ChargeRepository chargeRepository;
 
     /**
      * 料金情報をすべて取得する

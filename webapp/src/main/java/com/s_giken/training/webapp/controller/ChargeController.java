@@ -10,20 +10,17 @@ import com.s_giken.training.webapp.model.ChargeSearchCondition;
 import com.s_giken.training.webapp.model.entity.Charge;
 import com.s_giken.training.webapp.exception.NotFoundException;
 import com.s_giken.training.webapp.service.ChargeService;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/charge")
 public class ChargeController {
     private final ChargeService chargeService;
-
-    public ChargeController(ChargeService chargeService) {
-        this.chargeService = chargeService;
-    }
 
     @GetMapping("/search")
     public String showSearchCondition(Model model) {

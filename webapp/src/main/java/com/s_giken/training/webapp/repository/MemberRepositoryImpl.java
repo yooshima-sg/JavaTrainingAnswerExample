@@ -3,31 +3,22 @@ package com.s_giken.training.webapp.repository;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
+import com.s_giken.training.webapp.exception.TooManyResultException;
 import com.s_giken.training.webapp.model.entity.Member;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 加入者情報 リポジトリクラス
  */
 @Repository
+@RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Member> rowMapper;
-
-    /**
-     * コンストラクタ
-     * 
-     * @param jdbcTemplate Springよりインジェクトされる JdbcTemplate オブジェクト
-     * @param rowMapper Springよりインジェクトされる RowMapper<Member< オブジェクト
-     */
-    public MemberRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Member> rowMapper) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.rowMapper = rowMapper;
-    }
 
     /**
      * 加入者情報をすべて取得する。
@@ -50,17 +41,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findById(Long id) {
         String sql = "SELECT * FROM T_MEMBER WHERE member_id = ?";
-        Object[] args = {id};
-        int[] argTypes = {Types.BIGINT};
 
-        Member member;
-        try {
-            member = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
-        } catch (DataAccessException e) {
-            member = null;
-        }
+        List<Member> members = jdbcTemplate.query(sql, rowMapper, id);
 
-        return Optional.ofNullable(member);
+        return switch (members.size()) {
+            case 0 -> Optional.empty();
+            case 1 -> Optional.of(members.get(0));
+            default -> throw new TooManyResultException("Too many records.");
+        };
     }
 
     /**

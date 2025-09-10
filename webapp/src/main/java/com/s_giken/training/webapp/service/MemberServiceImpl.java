@@ -9,22 +9,15 @@ import com.s_giken.training.webapp.exception.AttributeErrorException;
 import com.s_giken.training.webapp.model.entity.Member;
 import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 加入者管理機能のサービスクラス(実態クラス)
  */
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    private MemberRepository memberRepository;
-
-    /**
-     * 加入者管理機能のサービスクラスのコンストラクタ
-     * 
-     * @param memberRepository 加入者管理機能のリポジトリクラス(SpringのDIコンテナから渡される)
-     */
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberRepository memberRepository;
 
     /**
      * 加入者を全件取得する

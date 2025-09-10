@@ -3,31 +3,21 @@ package com.s_giken.training.webapp.repository;
 import java.sql.Types;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
+import com.s_giken.training.webapp.exception.TooManyResultException;
 import com.s_giken.training.webapp.model.entity.Charge;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 料金情報 リポジトリオブジェクト
  */
 @Repository
+@RequiredArgsConstructor
 public class ChargeRepositoryImpl implements ChargeRepository {
 	private final JdbcTemplate jdbcTemplate;
 	private final RowMapper<Charge> rowMapper;
-
-	/**
-	 * コンストラクタ
-	 * 
-	 * @param jdbcTemplate Springよりインジェクトされる JdbcTemplate オブジェクト
-	 * @param rowMapper Springよりインジェクトされる RowMapper<Member< オブジェクト
-	 */
-	public ChargeRepositoryImpl(JdbcTemplate jdbcTemplate, RowMapper<Charge> rowMapper) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.rowMapper = rowMapper;
-	}
 
 	/**
 	 * 料金情報をすべて取得する
@@ -51,17 +41,14 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 	@Override
 	public Optional<Charge> findById(Long id) {
 		String sql = "SELECT * FROM T_CHARGE WHERE charge_id =  ? ";
-		Object[] args = {id};
-		int[] argTypes = {Types.BIGINT};
 
-		Charge charge;
-		try {
-			charge = jdbcTemplate.queryForObject(sql, args, argTypes, rowMapper);
-		} catch (DataAccessException e) {
-			charge = null;
-		}
+		List<Charge> charges = jdbcTemplate.query(sql, rowMapper, id);
 
-		return Optional.ofNullable(charge);
+		return switch (charges.size()) {
+			case 0 -> Optional.empty();
+			case 1 -> Optional.of(charges.get(0));
+			default -> throw new TooManyResultException("Too many records.");
+		};
 	}
 
 	/**

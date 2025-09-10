@@ -14,6 +14,7 @@ import com.s_giken.training.webapp.model.MemberSearchCondition;
 import com.s_giken.training.webapp.model.PaymentMethod;
 import com.s_giken.training.webapp.model.entity.Member;
 import com.s_giken.training.webapp.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,18 +25,10 @@ import org.springframework.validation.annotation.Validated;
  * 加入者管理機能のコントローラークラス
  */
 @Controller // コントローラークラスであることを示す
+@RequiredArgsConstructor
 @RequestMapping("/member") // リクエストパスを指定
 public class MemberController {
 	private final MemberService memberService;
-
-	/**
-	 * 加入者管理機能のコントローラークラスのコンストラクタ
-	 * 
-	 * @param memberService 加入者管理機能のサービスクラス(SpringのDIコンテナから渡される)
-	 */
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
-	}
 
 	/**
 	 * コントローラで受けっとったリクエストの型変換方法をカスタマイズする。
