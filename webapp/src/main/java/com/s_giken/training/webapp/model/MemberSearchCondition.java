@@ -12,13 +12,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // 引数のないコンストラクタを自動生成
 @AllArgsConstructor // 全てのメンバ変数に対する引数を持つコンストラクタを自動生成
 public class MemberSearchCondition {
-    // メールアドレス検索用
+    /**
+     * メールアドレスの一部
+     */
     private String mail;
+    /**
+     * 利用者氏名の一部
+     */
     private String name;
 
+    /**
+     * ソート対象項目名
+     */
     @Pattern(regexp = "^(member_id|mail|name|address|start_date|end_date|payment_method)$")
     private String sortColName;
 
+    /**
+     * ソート方法
+     */
     @Pattern(regexp = "^(asc|desc)$")
     private String sortOrder;
 }

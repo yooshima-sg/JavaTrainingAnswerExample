@@ -59,8 +59,6 @@ public class ChargeServiceImpl implements ChargeService {
      * 料金情報を追加する
      * 
      * @param charge 料金情報エンティティオブジェクト
-     * 
-     * @returnt 追加した料金情報の数
      */
     @Override
     public void add(Charge charge) {
@@ -74,8 +72,6 @@ public class ChargeServiceImpl implements ChargeService {
      * 料金情報を更新する
      * 
      * @param charge 更新する情報が格納された料金情報エンティティオブジェクト
-     * 
-     * @return 更新した料金情報の数
      */
     @Override
     public void update(Charge charge) {
@@ -86,11 +82,9 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     /**
-     * 料金IDを持つ料金情報を削除する
+     * 料金情報を削除する
      * 
-     * @param id 料金情報ID
-     * 
-     * @return 削除した料金情報の数
+     * @param id 削除対象の料金情報ID
      */
     @Override
     public void deleteById(Long chargeId) {

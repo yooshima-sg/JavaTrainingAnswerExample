@@ -158,11 +158,14 @@ public class MemberController {
 	 */
 	@PostMapping("/update")
 	@Transactional
-	public String saveMember(
+	public String updateMember(
 			@Validated Member member,
 			BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes,
+			Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("addMode", true);
+			model.addAttribute("model", model);
 			return "member_edit";
 		}
 		memberService.update(member);

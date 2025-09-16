@@ -12,11 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChargeSearchCondition {
+    /**
+     * 料金名の一部
+     */
     private String name;
 
+    /**
+     * ソート対象項目
+     */
     @Pattern(regexp = "^(charge_id|name|amount|start_date|end_date)$")
     private String sortColName;
 
+    /**
+     * ソート方法
+     */
     @Pattern(regexp = "^(asc|desc)$")
     private String sortOrder;
 }

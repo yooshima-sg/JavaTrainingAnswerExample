@@ -22,35 +22,62 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
+    /**
+     * 加入者情報ID
+     */
     @Nullable
     private Long memberId;
 
+    /**
+     * メールアドレス
+     */
     @NotBlank
     @Size(max = 255)
     private String mail;
 
+    /**
+     * 利用者氏名
+     */
     @NotBlank
     @Size(max = 31)
     private String name;
 
+    /**
+     * 利用者住所
+     */
     @NotBlank
     @Size(max = 127)
     private String address;
 
+    /**
+     * 適用開始日
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private LocalDate startDate;
 
+    /**
+     * 適用終了日
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private LocalDate endDate;
 
+    /**
+     * 支払い方法
+     */
     @NotNull
     private PaymentMethod paymentMethod;
 
+    /**
+     * 情報作成日時
+     */
     @Nullable
     private Timestamp createdAt;
 
+    /**
+     * 情報更新日時
+     */
     @Nullable
     private Timestamp modifiedAt;
 }

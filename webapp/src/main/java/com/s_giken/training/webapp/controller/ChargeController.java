@@ -16,12 +16,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ * 理宇金情報管理コントローラクラス
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/charge")
 public class ChargeController {
     private final ChargeService chargeService;
 
+    /**
+     * 料金情報検索条件入力画面を表示する
+     * 
+     * @param model テンプレートに渡す情報
+     * @return テンプレート名
+     */
     @GetMapping("/search")
     public String showSearchCondition(Model model) {
         var chargeSearchCondition = new ChargeSearchCondition();
@@ -29,6 +38,12 @@ public class ChargeController {
         return "charge_search_condition";
     }
 
+    /**
+     * 料金情報検索結果画面を表示する
+     * 
+     * @param model テンプレートに渡す情報
+     * @return テンプレート名
+     */
     @PostMapping("/search")
     public String searchAndListing(
             @ModelAttribute("chargeSearchCondition") ChargeSearchCondition chargeSearchCodition,
@@ -38,6 +53,12 @@ public class ChargeController {
         return "charge_search_result";
     }
 
+    /**
+     * 料金情報追加画面を表示する
+     * 
+     * @param model テンプレートに渡す情報
+     * @return テンプレート名
+     */
     @GetMapping("/add")
     public String addCharge(Model model) {
         var charge = new Charge();
@@ -46,6 +67,15 @@ public class ChargeController {
         return "charge_edit";
     }
 
+    /**
+     * 料金情報を追加する
+     * 
+     * @param charge 料金情報
+     * @param bindingResult バリデーション結果
+     * @param redirectAttributes リダイレクト時に渡す情報
+     * @param model テンプレートに渡す情報
+     * @return テンプレート名 or リダイレクト先
+     */
     @PostMapping("/add")
     public String addCharge(
             @Validated Charge charge,
@@ -62,7 +92,13 @@ public class ChargeController {
         return "redirect:/charge/edit/" + charge.getChargeId();
     }
 
-
+    /**
+     * 料金情報編集画面を表示する
+     * 
+     * @param id 編集対象の料金情報ID(URLより取得)
+     * @param model テンプレートに渡す情報
+     * @return テンプレート名
+     */
     @GetMapping("/edit/{id}")
     public String editCharge(
             @PathVariable Long id,
@@ -77,12 +113,24 @@ public class ChargeController {
 
     }
 
+    /**
+     * 料金情報を更新する
+     * 
+     * @param charge 料金情報
+     * @param bindingResult バリデーション結果
+     * @param redirectAttributes リダイレクト先に渡す情報を格納するオブジェクト
+     * @param model テンプレートに渡す情報を格納するオブジェクト
+     * @return テンプレート名 or リダイレクト先
+     */
     @PostMapping("/update")
     public String updateCharge(
             @Validated Charge charge,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("addMode", false);
+            model.addAttribute("charge", charge);
             return "charge_edit";
         }
         chargeService.update(charge);
@@ -90,6 +138,13 @@ public class ChargeController {
         return "redirect:/charge/edit/" + charge.getChargeId();
     }
 
+    /**
+     * 料金情報を削除する
+     * 
+     * @param id 削除対象となる料金情報ID
+     * @param redirectAttributes リダイレクト先に渡す情報を格納するオブジェクト
+     * @return リダイレクト先
+     */
     @GetMapping("/delete/{id}")
     public String deleteCharge(
             @PathVariable Long id,
