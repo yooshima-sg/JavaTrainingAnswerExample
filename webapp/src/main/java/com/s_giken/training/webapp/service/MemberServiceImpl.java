@@ -55,9 +55,10 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<Member> findByConditions(MemberSearchCondition memberSearchCondition) {
-        return memberRepository.findByMailAndNameLike(memberSearchCondition.getMail(),memberSearchCondition.getName());
+        return memberRepository.findByMailAndNameLike(memberSearchCondition.getMail(),
+                memberSearchCondition.getName());
     }
-                
+
 
     /**
      * 加入者を登録する
@@ -86,9 +87,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * 加入者を先所する
+     * 加入者情報を削除する
      * 
-     * @param memberId 加入者情報のID
+     * @param memberId 削除対象の加入者ID
      */
     @Override
     public void deleteById(Long memberId) {

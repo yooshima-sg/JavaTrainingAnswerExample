@@ -11,8 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChargeSearchCondition {
+    /**
+     * 料金名の一部
+     */
     private String name;
 
-    private String sortColName = "";// 初期化
+    /**
+     * ソート対象列名
+     */
+    private String sortColName = "";
+    /**
+     * ソート方法
+     */
     private String sortOrder = "";
 }
