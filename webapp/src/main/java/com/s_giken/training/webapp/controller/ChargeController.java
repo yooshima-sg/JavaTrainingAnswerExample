@@ -53,8 +53,11 @@ public class ChargeController {
     public String addCharge(
             @Validated Charge charge,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("addMode", true);
+            model.addAttribute("charge", charge);
             return "charge_edit";
         }
         chargeService.add(charge);

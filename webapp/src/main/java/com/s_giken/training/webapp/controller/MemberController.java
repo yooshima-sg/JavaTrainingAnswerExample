@@ -129,12 +129,17 @@ public class MemberController {
 	public String addMember(
 			@Validated Member member,
 			BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes,
+			Model model) {
+
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("addMode", true);
+			model.addAttribute("model", model);
 			return "member_edit";
 		}
 		memberService.add(member);
 		redirectAttributes.addFlashAttribute("message", "保存しました。");
+
 		return "redirect:/member/edit/" + member.getMemberId();
 	}
 
