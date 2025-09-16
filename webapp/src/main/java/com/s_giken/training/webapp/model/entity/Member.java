@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.s_giken.training.webapp.model.PaymentMethod;
@@ -26,12 +26,15 @@ public class Member {
     private Long memberId;
 
     @NotBlank
+    @Size(max = 255)
     private String mail;
 
     @NotBlank
+    @Size(max = 31)
     private String name;
 
     @NotBlank
+    @Size(max = 127)
     private String address;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
