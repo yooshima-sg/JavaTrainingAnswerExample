@@ -43,11 +43,11 @@ public class MemberRepositoryImpl implements MemberRepository {
 
         List<Member> members = jdbcTemplate.query(sql, rowMapper, id);
 
-        return switch (members.size()) {
-            case 0 -> Optional.empty();
-            case 1 -> Optional.of(members.get(0));
-            default -> throw new TooManyResultException("Too many records.");
-        };
+        if (members.size() >= 2) {
+            throw new TooManyResultException("Too many records.");
+        }
+
+        return members.stream().findFirst();
     }
 
     /**
@@ -79,8 +79,9 @@ public class MemberRepositoryImpl implements MemberRepository {
         sql = sql.replace("@@sortColName@@", sortColName.toUpperCase())
                 .replace("@@sortOrder@@", sortOrder.toUpperCase());
         Object[] args = {"%" + mail + "%", "%" + name + "%"};
-        int[] argTypes = {Types.VARCHAR, Types.VARCHAR};
-        List<Member> result = jdbcTemplate.query(sql, args, argTypes, rowMapper);
+
+        List<Member> result = jdbcTemplate.query(sql, rowMapper, args);
+
         return result;
     }
 

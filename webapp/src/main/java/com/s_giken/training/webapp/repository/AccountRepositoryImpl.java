@@ -21,10 +21,10 @@ public class AccountRepositoryImpl implements AccountRepository {
 
         List<Account> users = jdbcTemplate.query(sql, rowMapper, username);
 
-        return switch (users.size()) {
-            case 0 -> Optional.empty();
-            case 1 -> Optional.of(users.get(0));
-            default -> throw new TooManyResultException("Too many records.");
-        };
+        if (users.size() >= 2) {
+            throw new TooManyResultException("Too many records.");
+        }
+
+        return users.stream().findFirst();
     }
 }

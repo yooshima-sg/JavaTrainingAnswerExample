@@ -44,11 +44,11 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 
 		List<Charge> charges = jdbcTemplate.query(sql, rowMapper, id);
 
-		return switch (charges.size()) {
-			case 0 -> Optional.empty();
-			case 1 -> Optional.of(charges.get(0));
-			default -> throw new TooManyResultException("Too many records.");
-		};
+		if (charges.size() >= 2) {
+			throw new TooManyResultException("Too many records.");
+		}
+
+		return charges.stream().findFirst();
 	}
 
 	/**
@@ -78,10 +78,9 @@ public class ChargeRepositoryImpl implements ChargeRepository {
 				"SELECT * FROM T_CHARGE WHERE name like ? ORDER BY @@sortColName@@ @@sortOrder@@";
 		sql = sql.replace("@@sortColName@@", sortColName.toUpperCase())
 				.replace("@@sortOrder@@", sortOrder.toUpperCase());
-		Object[] p = {"%" + chargeName + "%"};
-		int[] pTypes = {Types.VARCHAR};
+		Object[] args = {"%" + chargeName + "%"};
 
-		List<Charge> result = jdbcTemplate.query(sql, p, pTypes, rowMapper);
+		List<Charge> result = jdbcTemplate.query(sql, rowMapper, args);
 
 		return result;
 	}
